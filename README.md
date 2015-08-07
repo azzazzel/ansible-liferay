@@ -3,12 +3,23 @@ Role Name
 
 An Ansible role to install and configure Liferay portal. 
 
-Requirements
+Requirements & Limitations
 ------------
 
- - Tested on Ansible 1.9.2 but may also work with older versions 
+This role was tested only on Ansible 1.9.2 but may also work with older versions!
+ 
+This is a very basic role and while it is capable of provisioning fully functional Liferay cluster, 
+it has some significant limitations (comparing to what one can do configuring Liferay manually)!
+
  - Tested only on Linux and most likely will not work on windows (some tasks make use of linux command line utilities)
  - This role does not install Java. It simply assumes it's already installed. 
+ - Currently it uses predefined `liferay-ext.properties` files and only allows to change particular values in it. 
+ - Liferay clustering configuration is currently very limited:
+   - it uses multicast for discovery 
+   - it uses RMI threads for cache replication (Ehcache Cluster EE plugin not supported)
+   - it uses replicated Lucene indexes for indexing/search (Solr is not supported)
+   - document library is fixed to use `AdvancedFileSystemStore` and only file storage path is configurable
+   - `cluster link` feature is always enabled (even if only a single machine is provisioned) 
 
 Role Variables
 --------------
@@ -94,8 +105,8 @@ will
    * use MySQL database called `lportal` on `localhost` 
    * enable cluster link feature
    
-This is probably not what you want but it's a reasonable default. To configure working cluster 
-with shared database and file system, use something like
+This is probably not what one would want, but it's a reasonable default. To configure working cluster 
+with shared database and file system, something like this can be provided:
 
     - hosts: servers
       roles:
@@ -115,7 +126,7 @@ with shared database and file system, use something like
              liferay_cluster_autodetect: <DATABASE_SERVER>:<DATABASE_PORT>
            }
 
-If you have more databases Liferay needs to connect to, you can add add them like this
+If there are more databases Liferay needs to connect to, they can be added like this
 
     - hosts: servers
       roles:
