@@ -1,0 +1,5 @@
+---
+
+- include: liferay-install.yml
+- include: liferay-config.yml
+- include: liferay-system-config.yml

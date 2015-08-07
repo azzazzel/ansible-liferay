@@ -1,0 +1,9 @@
+---
+
+- name: Make sure the folder for Liferay's document library exists
+  sudo: yes
+  file: path={{ liferay_dl_folder }} state=directory mode=0777
+
+- name: Make sure 'portal-ext.properties' are up to date
+  sudo: yes
+  template: src=portal-ext.properties dest={{ liferay_home }}

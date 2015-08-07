@@ -1,0 +1,58 @@
+---
+#
+# Liferay archive to be installed. If the file in `local` exists it will be used. 
+# If it doesn't exists and `url` is provided it will be downloaded
+# It's user's responsibility to make sure the right file is downloaded 
+# The role assumes the file is "liferay bundle" packaged as ZIP.
+#
+liferay_archive: {
+  local: files/liferay-portal-tomcat-6.2-ce-ga4.zip,
+  url: "http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.2.3%20GA4/liferay-portal-tomcat-6.2-ce-ga4-20150416163831865.zip" 
+}
+
+#
+# The folder on the server whe the Liferay bundle will be unpacked 
+#
+liferay_unpack_folder: /usr/local
+
+#
+# Liferay's home folder. This is should not be changed unless you really know what you are doing! 
+#
+liferay_home: "{{ liferay_unpack_folder }}/{{ liferay_folder_from_zip.stdout }}"
+
+#
+# The operating system user and group that will be used to run Liferay 
+#
+liferay_os_user: liferay
+liferay_os_group: liferay
+
+#
+# Liferay's default database 
+#
+liferay_default_database: {
+  driver: "com.mysql.jdbc.Driver",
+  url: "jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false",
+  user: "liferay",
+  pass: liferay
+}
+
+#
+# Additional databases to be added to Liferay's configuration 
+#
+liferay_additional_databases: [] 
+
+
+#
+# A folder where files from Liferay's document library will be stored.
+# Change this to a shared storage in clustered environment 
+#
+liferay_dl_folder: "{{ liferay_home }}/data/document_library/"
+
+
+#
+# Network address to autodetect the default outgoing IP address 
+# Change this to your database IP:PORT to make sure the right interface is used.
+#
+liferay_cluster_autodetect: google.com:80
+
+

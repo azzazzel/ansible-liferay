@@ -1,0 +1,34 @@
+---
+
+- name: Download Liferay archive if not available locally and there is url 
+  local_action: >
+    get_url url={{ liferay_archive.url }} dest={{ liferay_archive.local }}
+  when: liferay_archive.url is defined
+
+- name: Check if provided Liferay archive exists
+  local_action: >
+    stat path={{ liferay_archive.local }}
+  register: liferay_archive_stat
+  failed_when: liferay_archive_stat.stat.exists == false
+  
+- name: Make sure unzip is installed
+  sudo: yes
+  apt: name={{ item }} state=present
+  with_items:
+   - unzip 
+
+- name: Get the Liferay main folder from the archive
+  local_action: >
+    shell unzip -v {{ liferay_archive.local }} | grep -P "^[^\/]*/$" | grep -P "[^\s]*$" -o | grep -P '[^/]*' -o
+  register: liferay_folder_from_zip
+  changed_when: false
+  
+- name: Copy and unpack Liferay archive 
+  sudo: yes
+  unarchive: 
+    src: "{{ liferay_archive.local }}"
+    dest: "{{ liferay_unpack_folder }}"
+    copy: yes
+    creates: "{{ liferay_home }}"
+
+    

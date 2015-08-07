@@ -1,0 +1,24 @@
+---
+
+- name: Make sure Liferay system group exists
+  sudo: yes
+  group: name={{ liferay_os_group }} state=present
+
+- name: Make sure Liferay system user exists
+  sudo: yes
+  user: name={{ liferay_os_user }} group={{ liferay_os_group }}
+  
+- name: Add liferay system service
+  sudo: yes
+  template: src=liferay_service.sh dest=/etc/init.d/liferay mode=0755
+
+- name: Check if Liferay system service is installed  
+  sudo: yes
+  shell: "find -L /etc/rc?.d -samefile /etc/init.d/liferay"
+  register: liferay_service_links
+  changed_when: false
+
+- name: Install Liferay system service if not installed  
+  sudo: yes
+  shell: update-rc.d liferay defaults
+  when: liferay_service_links.stdout == ""
