@@ -4,6 +4,7 @@
   local_action: >
     get_url url={{ liferay_archive.url }} dest={{ liferay_archive.local }}
   when: liferay_archive.url is defined
+  run_once: true
 
 - name: Check if provided Liferay archive exists
   local_action: >
