@@ -4,12 +4,14 @@
   local_action: >
     get_url url={{ liferay_archive.url }} dest={{ liferay_archive.local }}
   when: liferay_archive.url is defined
+  sudo: false
   run_once: true
 
 - name: Check if provided Liferay archive exists
   local_action: >
     stat path={{ liferay_archive.local }}
   register: liferay_archive_stat
+  sudo: false
   failed_when: liferay_archive_stat.stat.exists == false
   
 - name: Make sure unzip is installed
@@ -22,6 +24,7 @@
   local_action: >
     shell unzip -v {{ liferay_archive.local }} | grep -P "^[^\/]*/$" | grep -P "[^\s]*$" -o | grep -P '[^/]*' -o
   register: liferay_folder_from_zip
+  sudo: false
   changed_when: false
   
 - name: Copy and unpack Liferay archive 
