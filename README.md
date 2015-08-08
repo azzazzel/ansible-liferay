@@ -94,7 +94,7 @@ The simplest form
 
     - hosts: servers
       roles:
-         - role: milendyankov.liferay
+        - role: milendyankov.liferay
 
 will 
  
@@ -110,56 +110,45 @@ with shared database and file system, something like this can be provided:
 
     - hosts: servers
       roles:
-         - {
-             role: milendyankov.liferay,
-             liferay_archive: {
-               local: <PATH_TO_STORE_FILE>,
-               url: "<DOWNLOAD_URL>" 
-             },
-             liferay_default_database: {
-               driver: "com.mysql.jdbc.Driver",
-               url: "jdbc:mysql://<DATABASE_SERVER>/<DATABASE_NAME>?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false",
-               user: "<DATABASE_USER>",
-               pass: "<DATABASE_PASSWORD>"
-             },
-             liferay_dl_folder: "/mnt/shared/liferay/document_library/",
-             liferay_cluster_autodetect: <DATABASE_SERVER>:<DATABASE_PORT>
-           }
+        - role: milendyankov.liferay
+          liferay_archive: 
+            local: <PATH_TO_STORE_FILE>
+            url: "<DOWNLOAD_URL>" 
+          liferay_default_database: 
+            driver: "com.mysql.jdbc.Driver"
+            url: "jdbc:mysql://<DATABASE_SERVER>/<DATABASE_NAME>?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false"
+            user: "<DATABASE_USER>"
+            pass: "<DATABASE_PASSWORD>"
+          liferay_dl_folder: "/mnt/shared/liferay/document_library/"
+          liferay_cluster_autodetect: <DATABASE_SERVER>:<DATABASE_PORT>
+           
 
 If there are more databases Liferay needs to connect to, they can be added like this
 
     - hosts: servers
       roles:
-         - {
-             role: milendyankov.liferay,
-             liferay_archive: {
-               local: <PATH_TO_STORE_FILE>,
-               url: "<DOWNLOAD_URL>" 
-             },
-             liferay_default_database: {
-               driver: "com.mysql.jdbc.Driver",
-               url: "jdbc:mysql://<DATABASE_SERVER>/<DATABASE_NAME>?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false",
-               user: "<DATABASE_USER>",
-               pass: "<DATABASE_PASSWORD>"
-             },
-             liferay_dl_folder: "/mnt/shared/liferay/document_library/",
-             liferay_cluster_autodetect: <DATABASE_SERVER>:<DATABASE_PORT>
-             liferay_additional_databases:
-              - {
-                 id: custom1,
-                 driver: "com.mysql.jdbc.Driver",
-                 url: "jdbc:mysql://<DATABASE_SERVER>/<DATABASE_NAME>",
-                 user: "<DATABASE_USER>",
-                 pass: "<DATABASE_PASSWORD>"
-	             }
-              - {
-                 id: custom2,
-                 driver: "oracle.jdbc.OracleDriver",
-                 url: "jdbc:oracle:thin:@//HOSTNAME:PORT/SERVICENAME",
-                 user: "<DATABASE_USER>",
-                 pass: "<DATABASE_PASSWORD>"
-	             }
-          }
+        - role: milendyankov.liferay
+          liferay_archive: 
+            local: <PATH_TO_STORE_FILE>
+            url: "<DOWNLOAD_URL>" 
+          liferay_default_database: 
+            driver: "com.mysql.jdbc.Driver"
+            url: "jdbc:mysql://<DATABASE_SERVER>/<DATABASE_NAME>?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false"
+            user: "<DATABASE_USER>"
+            pass: "<DATABASE_PASSWORD>"
+          liferay_dl_folder: "/mnt/shared/liferay/document_library/"
+          liferay_cluster_autodetect: <DATABASE_SERVER>:<DATABASE_PORT>
+          liferay_additional_databases:
+            - id: custom1
+              driver: "com.mysql.jdbc.Driver"
+              url: "jdbc:mysql://<DATABASE_SERVER>/<DATABASE_NAME>"
+              user: "<DATABASE_USER>"
+              pass: "<DATABASE_PASSWORD>"
+            - id: custom2
+              driver: "oracle.jdbc.OracleDriver",
+              url: "jdbc:oracle:thin:@//HOSTNAME:PORT/SERVICENAME"
+              user: "<DATABASE_USER>"
+              pass: "<DATABASE_PASSWORD>"
 
 
 

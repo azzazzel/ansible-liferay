@@ -5,10 +5,10 @@
 # It's user's responsibility to make sure the right file is downloaded 
 # The role assumes the file is "liferay bundle" packaged as ZIP.
 #
-liferay_archive: {
-  local: files/liferay-portal-tomcat-6.2-ce-ga4.zip,
+liferay_archive: 
+  local: files/liferay-portal-tomcat-6.2-ce-ga4.zip
   url: "http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.2.3%20GA4/liferay-portal-tomcat-6.2-ce-ga4-20150416163831865.zip" 
-}
+
 
 #
 # The folder on the server whe the Liferay bundle will be unpacked 
@@ -29,12 +29,12 @@ liferay_os_group: liferay
 #
 # Liferay's default database 
 #
-liferay_default_database: {
-  driver: "com.mysql.jdbc.Driver",
-  url: "jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false",
-  user: "liferay",
+liferay_default_database: 
+  driver: "com.mysql.jdbc.Driver"
+  url: "jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false"
+  user: "liferay"
   pass: liferay
-}
+
 
 #
 # Additional databases to be added to Liferay's configuration 
