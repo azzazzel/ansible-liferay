@@ -1,4 +1,4 @@
-Role Name
+Liferay
 =========
 
 An Ansible role to install and configure Liferay portal. 
